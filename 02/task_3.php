@@ -1,18 +1,22 @@
 <?php
 
-function plus($a, $b) {
+function plus($a, $b)
+{
     return $a + $b;
 }
 
-function minus($a, $b) {
+function minus($a, $b)
+{
     return $a - $b;
 }
 
-function mult($a, $b) {
+function mult($a, $b)
+{
     return $a * $b;
 }
 
-function div($a, $b) {
+function div($a, $b)
+{
     return $b !== 0 ? $a / $b : 'ошибка деления на 0';
 }
 

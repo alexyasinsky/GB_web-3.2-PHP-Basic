@@ -1,6 +1,7 @@
 <?php
 
-function power($val, $pow) {
+function power($val, $pow)
+{
     if ($pow == 0) return 1;
     return $val *= power($val, --$pow);
 }
