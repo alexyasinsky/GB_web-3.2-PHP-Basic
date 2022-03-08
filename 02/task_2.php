@@ -40,8 +40,7 @@ $a = rand(0,15);
 
 //способ 2
 
-function numRow ($x)
-{
+function numRow ($x) {
     echo $x++ . " ";
     if ($x <= 15) numRow($x);
 }
