@@ -37,7 +37,7 @@ function renderMenu($menu) {
         if ($attributes['contains'] != '')
         {
             $str .= renderMenu($attributes['contains']);
-        };
+        }
         $str .= "</li>";
     }
     $str .= '</ul>';
