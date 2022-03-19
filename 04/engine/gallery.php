@@ -1,14 +1,6 @@
 <?php
 
 
-
-define('UPLOADS_DIR', 'img/gallery_fullsize/');
-define('VIEW_DIR', 'img/gallery_small/');
-
-function getGallery() {
-    return array_splice(scandir(VIEW_DIR), 2);
-}
-
 function refreshGalleryPage($message) {
     header("Location: index.php?page=gallery&status=$message");
     die();
@@ -22,7 +14,7 @@ $messages = [
     'extension' => 'Можно загружать только jpg, png и giff, неверное содержание файла, не изображение.',
 ];
 
-if (!empty($_FILES)) {
+function loadImage(){
 
     $filename = $_FILES['my_file']['name'];
 

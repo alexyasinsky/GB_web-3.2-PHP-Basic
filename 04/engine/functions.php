@@ -8,6 +8,10 @@ function render($page, $params = []) {
     ]);
 }
 
+function getFiles($dir) {
+    return array_splice(scandir($dir), 2);
+}
+
 function renderTemplate($page, $params = []) {
 
     /*    foreach ($params as $key => $value) {

@@ -1,5 +1,6 @@
 <?php
-include "../config/config.php";
+
+include dirname(__DIR__) . "/config/config.php";
 
 $page = 'index';
 if (isset($_GET['page'])) {
@@ -21,7 +22,7 @@ switch ($page) {
 
         $params['title'] = 'Бухи';
         $params['message'] = 'Файл загружен';
-        $params['files_upload_example'] = getFiles();
+        $params['files'] = getFiles('doc');
         _log($params, 'bux');
         break;
 
@@ -32,7 +33,10 @@ switch ($page) {
 
     case 'gallery':
         $params['title'] = 'Галерея';
-        $params['gallery'] = getGallery();
+        $params['gallery'] = getFiles(VIEW_DIR);
+        if (!empty($_FILES)) {
+            loadImage();
+        }
         $params['message'] = $messages[$_GET['status']];
         break;
 
