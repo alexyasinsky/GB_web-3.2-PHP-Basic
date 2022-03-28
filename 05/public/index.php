@@ -6,7 +6,16 @@ include dirname(__DIR__) . "/config/config.php";
 //if (isset($_GET['page'])) {
 //    $page = $_GET['page'];
 //}
-$page = $_GET['page'] ?? 'index';
+//$page = $_GET['page'] ?? 'index';
+
+$url_array = explode('/', $_SERVER['REDIRECT_URL']);
+
+
+if ($url_array[1] == "") {
+    $page = 'index';
+} else {
+    $page = $url_array[1];
+}
 
 $params = [];
 
@@ -16,12 +25,6 @@ switch ($page) {
         break;
 
     case 'bux':
-        /* if (!empty($_FILES)) {
-            upload();
-            header(/?page=bux);
-        die();
-        }*/
-
         $params['title'] = 'Бухи';
         $params['message'] = 'Файл загружен';
         $params['files'] = getFiles('doc');
@@ -35,15 +38,22 @@ switch ($page) {
 
     case 'gallery':
         $params['title'] = 'Галерея';
-        $params['gallery'] = getFiles(VIEW_DIR);
+//        $params['gallery'] = getFiles(VIEW_DIR);
+        $params['gallery'] = getGalleryFromDB();
+
         if (!empty($_FILES)) {
             loadImage();
         }
         $params['message'] = $messages[$_GET['status']];
         break;
 
+    case 'gallery_item':
+        $params['title'] = 'Картинка';
+        $params['item'] = getOnePictureFromDB($_GET['id']);
+        break;
+
     case 'about':
-        $params['title'] = 'about';
+        $params['title'] = 'О нас';
         $params['phone'] = 444333;
         break;
 
