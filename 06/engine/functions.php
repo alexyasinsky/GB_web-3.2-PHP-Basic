@@ -1,5 +1,7 @@
 <?php
 
+include "../../02/task_4.php";
+
 function render($page, $params = []) {
     return renderTemplate(LAYOUTS_DIR . 'main', [
         'title' => $params['title'],
@@ -7,11 +9,6 @@ function render($page, $params = []) {
         'content' => renderTemplate($page, $params)
     ]);
 }
-
-function getFiles($dir) {
-    return array_splice(scandir($dir), 2);
-}
-
 
 function renderTemplate($page, $params = []) {
 
@@ -23,4 +20,8 @@ function renderTemplate($page, $params = []) {
     ob_start();
     include TEMPLATES_DIR . $page . ".php";
     return ob_get_clean();
+}
+
+function getFiles($dir) {
+    return array_splice(scandir($dir), 2);
 }

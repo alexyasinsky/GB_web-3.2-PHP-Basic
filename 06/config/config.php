@@ -13,9 +13,10 @@ define('USER', 'user1');
 define('PASS', '12345');
 define('DB', 'gb_php_1');
 
-include ROOT . "/engine/bux.php";
-include ROOT . "/engine/db.php";
 include ROOT . "/engine/functions.php";
-include ROOT . "/engine/catalog.php";
-include ROOT . "/engine/log.php";
-include ROOT . "/engine/gallery.php";
+include ROOT . "/models/bux.php";
+include ROOT . '/models/calc.php';
+include ROOT . "/engine/db.php";
+include ROOT . "/models/catalog.php";
+include ROOT . "/models/log.php";
+include ROOT . "/models/gallery.php";
