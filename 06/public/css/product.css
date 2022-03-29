@@ -1,0 +1,34 @@
+.product__card {
+    width: 150px;
+    height: 300px;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+    background: #FFFFFF;
+}
+
+.product__box {
+    display: flex;
+}
+
+.product__card h5 {
+    text-align: center;
+}
+
+.product__card img {
+    width: 100px;
+    height: 65px;
+}
+
+.product__card button {
+    margin-top: 5px;
+}
+
+.product__about {
+    width: 120px;
+    height: 65px;
+    overflow: hidden;
+    text-align: center;
+}

@@ -18,7 +18,7 @@ if ($url_array[1] == 'queries') {
 
 $url_array[1] == "" ? $page = 'index' : $page = $url_array[1];
 
-$params = prepareVariables($page, $messages, $calcArgs, $resultJS);
+$params = prepareVariables($page, $calcArgs, $resultJS);
 
 echo render($page, $params);
 

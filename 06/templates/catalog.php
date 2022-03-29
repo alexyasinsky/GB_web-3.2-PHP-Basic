@@ -1,10 +1,13 @@
+<link rel="stylesheet" href="css/product.css">
+
 <h2>Каталог</h2>
 
-<div>
+<div class="product__box">
     <?php foreach ($catalog as $item): ?>
-        <div>
-            <?=$item['name']?><br>
-            <img src="img/catalog/<?=$item['image']?>" alt="" width="100"><br>
+        <div class="product__card">
+            <h5><?=$item['name']?></h5>
+            <a href='/catalog_item?id=<?=$item['id']?>'><img src="img/catalog/<?=$item['image']?>" alt="" width="100"></a>
+            <p class="product__about"><?=$item['about']?></p>
             Цена: <?=$item['price']?><br>
             <button class="button">Купить</button>
             <hr>

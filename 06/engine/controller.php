@@ -3,11 +3,12 @@
 include "../config/config.php";
 
 
-function prepareVariables($page, $messages = [], $calcArgs = [], $resultJS = 0) {
+function prepareVariables($page, $calcArgs = [], $resultJS = 0) {
 
 //Для каждой страницы готовим массив со своим набором переменных
 //для подстановки их в соотвествующий шаблон
     $params = [];
+    $messages = getMessages();
 
     switch ($page) {
         case 'index':
@@ -23,22 +24,29 @@ function prepareVariables($page, $messages = [], $calcArgs = [], $resultJS = 0) 
 
         case 'catalog':
             $params['title'] = 'Каталог';
-            $params['catalog'] = getCatalog();
+            $params['catalog'] = getCatalogFromDB();
+//            $params['catalog'] = getCatalog();
+            break;
+
+        case 'catalog_item':
+            $params['title'] = 'Картинка';
+            updateViewsOnProductInDB($_GET['id']);
+            $params['item'] = getOneProductFromDB($_GET['id']);
             break;
 
         case 'gallery':
             $params['title'] = 'Галерея';
 //        $params['gallery'] = getFiles(VIEW_DIR);
-            $params['gallery'] = getGalleryFromDB();
-
             if (!empty($_FILES)) {
                 loadImage();
             }
+            $params['gallery'] = getGalleryFromDB();
             $params['message'] = $messages[$_GET['status']];
             break;
 
         case 'gallery_item':
-            $params['title'] = 'Картинка';
+            $params['title'] = 'Товар';
+            updateViewsOnPictureInDB($_GET['id']);
             $params['item'] = getOnePictureFromDB($_GET['id']);
             break;
 
