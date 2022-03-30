@@ -18,5 +18,6 @@ include ROOT . "/models/bux.php";
 include ROOT . '/models/calc.php';
 include ROOT . "/engine/db.php";
 include ROOT . "/models/catalog.php";
+include ROOT . "/models/feedback.php";
 include ROOT . "/models/log.php";
 include ROOT . "/models/gallery.php";

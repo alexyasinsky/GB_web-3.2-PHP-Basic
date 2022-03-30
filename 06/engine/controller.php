@@ -3,7 +3,7 @@
 include "../config/config.php";
 
 
-function prepareVariables($page, $calcArgs = [], $resultJS = 0) {
+function prepareVariables($page, $calcArgs = [], $resultJS = 0, $feedbackToChange = []) {
 
 //Для каждой страницы готовим массив со своим набором переменных
 //для подстановки их в соотвествующий шаблон
@@ -29,9 +29,12 @@ function prepareVariables($page, $calcArgs = [], $resultJS = 0) {
             break;
 
         case 'catalog_item':
-            $params['title'] = 'Картинка';
-            updateViewsOnProductInDB($_GET['id']);
-            $params['item'] = getOneProductFromDB($_GET['id']);
+            $params['title'] = 'Товар';
+            $productId = (int)$_GET['product_id'];
+            updateViewsOnProductInDB($productId);
+            $params['feedbacks'] = getFeedbackOnProductFromDB($productId);
+            $params['item'] = getOneProductFromDB($productId);
+            $params['feedbackToChange'] = $feedbackToChange;
             break;
 
         case 'gallery':
@@ -46,8 +49,9 @@ function prepareVariables($page, $calcArgs = [], $resultJS = 0) {
 
         case 'gallery_item':
             $params['title'] = 'Товар';
-            updateViewsOnPictureInDB($_GET['id']);
-            $params['item'] = getOnePictureFromDB($_GET['id']);
+            $id = (int)$_GET['id'];
+            updateViewsOnPictureInDB($id);
+            $params['item'] = getOnePictureFromDB($id);
             break;
 
         case 'about':

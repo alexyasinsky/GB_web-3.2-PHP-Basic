@@ -11,14 +11,20 @@ include dirname(__DIR__). '/engine/controller.php';
 
 $url_array = explode('/', $_SERVER['REDIRECT_URL']);
 
-if ($url_array[1] == 'queries') {
-    include ROOT . $_SERVER['REDIRECT_URL'];
-    die();
+switch ($url_array[1]) {
+    case 'queries':
+        include ROOT . $_SERVER['REDIRECT_URL'];
+        die();
+
+    case '':
+        $page = 'index';
+        break;
+
+    default:
+        $page = $url_array[1];
 }
 
-$url_array[1] == "" ? $page = 'index' : $page = $url_array[1];
-
-$params = prepareVariables($page, $calcArgs, $resultJS);
+$params = prepareVariables($page, $calcArgs, $resultJS, $feedbackToChange);
 
 echo render($page, $params);
 

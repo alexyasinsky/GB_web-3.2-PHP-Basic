@@ -20,7 +20,9 @@
 <script>
 
   window.onload = function () {
+
     async function postQuery(url, data) {
+
       const response = await fetch(url, {
           method: 'POST',
           headers: new Headers({
@@ -28,8 +30,11 @@
           }),
           body: JSON.stringify(data),
         });
+
       return await response.json();
+
     }
+
 
     function addListeners(){
 
@@ -45,10 +50,28 @@
             arg2: arg2,
             operation: e.target.value
           })
-          .then(response => {
+          answer.then(response => {
             let value = response.result;
             resultField.innerHTML = value;
           });
+
+          // (async () => {
+          //   await fetch('/queries/calcOperations.php', {
+          //     method: 'POST',
+          //     headers: {
+          //       'Content-Type': 'application/x-www-form-urlencoded'
+          //     },
+          //     body: `arg1=${arg1}&arg2=${arg2}&operation=${e.target.value}`,
+          //   })
+          //     .then(res => res.text()).then(answer => console.log(answer));
+          // })();
+
+
+          // (async () => {
+          //   await fetch(`/queries/calcOperations.php?arg1=${arg1}&arg2=${arg2}&operation=${e.target.value}`)
+          //   .then(res => res.text()).then(answer => console.log(answer));
+          // })();
+
         });
       });
     }
