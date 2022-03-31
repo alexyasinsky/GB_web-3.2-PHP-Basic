@@ -1,15 +1,27 @@
 <?php
 
-include "../config/config.php";
-
-
 function prepareVariables($page) {
 
 //Для каждой страницы готовим массив со своим набором переменных
 //для подстановки их в соотвествующий шаблон
     $params = [];
+    $params['auth'] = isAuth();
+    $params['name'] = get_user();
 
     switch ($page) {
+
+        case 'login':
+            loginActions();
+            break;
+
+        case 'logout':
+            setcookie("hash", "", time()-1, "/");
+            session_regenerate_id();
+            session_destroy();
+            header("Location: /?status=exit");
+            die();
+            break;
+
         case 'index':
             $params['title'] = 'Главная';
             break;
@@ -33,6 +45,10 @@ function prepareVariables($page) {
         case 'about':
             $params['title'] = 'О нас';
             $params['phone'] = 444333;
+            break;
+
+        case 'basket':
+            $params['title'] = 'Корзина';
             break;
 
         default:

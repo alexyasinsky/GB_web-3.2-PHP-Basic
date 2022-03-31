@@ -1,7 +1,10 @@
 <?php
 
+session_start();
 
-include dirname(__DIR__). '/engine/controller.php';
+include dirname(__DIR__) . "/config/config.php";
+include ROOT . '/engine/controller.php';
+
 
 //$page = 'index';
 //if (isset($_GET['page'])) {
