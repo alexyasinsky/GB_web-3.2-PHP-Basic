@@ -49,7 +49,12 @@ function prepareVariables($page) {
 
         case 'basket':
             $params['title'] = 'Корзина';
+            $params['basket'] = [];
             break;
+
+        case 'basketapi':
+            putProductIntoBasket();
+            die();
 
         default:
             echo "404";

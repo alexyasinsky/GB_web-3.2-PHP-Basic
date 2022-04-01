@@ -31,3 +31,4 @@ function getOneFeedbackFromDB($id) {
 function updateOneFeebackInDB($id, $name, $text) {
     return executeSql("UPDATE `feedback` SET name = '{$name}', text = '{$text}' WHERE id= $id");
 }
+

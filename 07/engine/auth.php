@@ -8,7 +8,10 @@ function isAuth() {
     if (isset($_SESSION['login'])) {
         return true;
     }
-        if (isset($_COOKIE["hash"])) {
+    if (!isset($_SESSION['id'])){
+        $_SESSION['id'] = random_int(50000, 65000);
+    }
+    if (isset($_COOKIE["hash"])) {
         checkCookieHash();
     }
     return isset($_SESSION['login']);
@@ -26,11 +29,11 @@ function auth($login, $password) {
     $row = getOneResult("SELECT * FROM users WHERE login = '{$login}'");
     if ($row) {
         $password_hash = $row['password_hash'];
-
         if (password_verify($password, $password_hash)) {
             //Авторизация
             $_SESSION['login'] = $login;
             $_SESSION['id'] = $row['id'];
+            putBasketFromSessionStorageToDB();
             return true;
         }
     }
@@ -48,10 +51,8 @@ function checkCookieHash() {
     $hash = $_COOKIE["hash"];
     $row = getOneResult("SELECT * FROM users WHERE cookie_hash='{$hash}'");
     if ($row) {
-        $user = $row['login'];
-        if (!empty($user)) {
-            $_SESSION['login'] = $user;
-        }
+        $_SESSION['login'] = $row['login'];
+        $_SESSION['id'] = $row['id'];
     }
 }
 

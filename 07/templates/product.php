@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="css/product.css">
-
 <h2><?=$item['name']?></h2>
 
 <div class="product__card">
@@ -7,7 +6,7 @@
     <img src="img/catalog/<?=$item['image']?>" alt="" width="100">
     <p class="product__about"><?=$item['about']?></p>
     Цена: <?=$item['price']?><br>
-    <button class="button">Купить</button>
+    <button class="product__button" data-product_id="<?=$item['id']?>">Купить</button>
     <hr>
 </div>
 
@@ -39,3 +38,9 @@
     <hr>
 </form>
 <?php endforeach; ?>
+<script>
+    const button = document.querySelector('.product__button');
+    button.addEventListener('click', event => {
+      addActionToBuyButton(button);
+    })
+</script>
