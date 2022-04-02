@@ -1,0 +1,15 @@
+.calcJS_form div {
+    margin-bottom: 20px;
+}
+
+.calcJS_form button {
+    width: 74px;
+}
+
+.calcJS_result {
+    width: 306px;
+    border: 1px solid black;
+    background: #FFFFFF;
+    height: 30px;
+    font-size: 20px;
+}

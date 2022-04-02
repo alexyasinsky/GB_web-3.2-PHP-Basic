@@ -1,0 +1,12 @@
+.calc_result {
+    display: inline-block;
+    border: 1px solid black;
+    background: #FFFFFF;
+    width: 151px;
+    font-size: 15px;
+    padding: 1px;
+}
+
+.calc_form {
+    height: 30px;
+}
