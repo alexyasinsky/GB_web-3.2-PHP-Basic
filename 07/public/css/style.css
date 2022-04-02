@@ -1,0 +1,7 @@
+body {
+    background: aqua;
+}
+
+#basket__indicator {
+    border: 1px solid red;
+}
