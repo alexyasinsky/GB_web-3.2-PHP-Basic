@@ -12,7 +12,7 @@ define('PASS', '12345');
 define('DB', 'gb_php_1');
 
 include ROOT . '/engine/auth.php';
-include ROOT . "/engine/functions.php";
+include ROOT . "/engine/render.php";
 include ROOT . "/engine/db.php";
 include ROOT . "/engine/styles.php";
 include ROOT . "/models/catalog.php";

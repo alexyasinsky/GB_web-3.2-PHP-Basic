@@ -21,7 +21,4 @@ function renderTemplate($page, $params = []) {
     return ob_get_clean();
 }
 
-function getFiles($dir) {
-    return array_splice(scandir($dir), 2);
-}
 
