@@ -25,12 +25,3 @@ function getFiles($dir) {
     return array_splice(scandir($dir), 2);
 }
 
-function setStatusMessage() {
-    $status = $_GET['status'];
-    $messages = [
-        'incorrect' => 'Вы ввели неверный логин или пароль',
-        'registered' => 'Регистрация успешно завершена!',
-        'exit' => 'Вы вышли из системы'
-    ];
-    return $messages[$status];
-}

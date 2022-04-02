@@ -55,18 +55,7 @@ function prepareVariables($page, $action) {
             break;
 
         case 'basketapi':
-            $data = json_decode(file_get_contents('php://input'));
-            $productId = $data->productId;
-            $amount = $data->amount;
-            $basketItemId = $data->basketItemId;
-            switch ($action){
-                case 'add':
-                    putProductIntoBasket($productId);
-                    break;
-                case 'delete':
-                    deleteProductFromBasket($productId, $basketItemId, $amount);
-                    break;
-            }
+            doBasketActions($action);
 
         default:
             echo "404";

@@ -90,3 +90,14 @@ function unsetCookiesAndSession() {
     session_regenerate_id();
     session_destroy();
 }
+
+function setStatusMessage() {
+    $status = $_GET['status'];
+    $messages = [
+        'incorrect' => 'Вы ввели неверный логин или пароль',
+        'registered' => 'Регистрация успешно завершена!',
+        'exit' => 'Вы вышли из системы',
+        'exist' => 'Такой пользователь уже существует'
+    ];
+    return $messages[$status];
+}
