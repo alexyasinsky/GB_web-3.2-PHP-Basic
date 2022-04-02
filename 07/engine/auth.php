@@ -65,7 +65,7 @@ function loginActions() {
             $password_hash = password_hash($password, PASSWORD_ARGON2ID);
             if (!checkExistingOfUser($login)) {
                 createNewUser($login, $password_hash);
-                auth($login, $password_hash);
+                auth($login, $password);
                 header("Location: /?status=registered");
             } else {
                 header("Location: /?status=exist");
@@ -79,8 +79,14 @@ function loginActions() {
                 header("Location: /?status=entered");
                 die();
             } else {
-                die("Не верный логин пароль");
+                header("Location: /?status=incorrect");
             }
         }
     }
+}
+
+function unsetCookiesAndSession() {
+    setcookie("hash", "", time()-1, "/");
+    session_regenerate_id();
+    session_destroy();
 }

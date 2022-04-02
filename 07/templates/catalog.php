@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="css/catalog.css">
-
 <h2>Каталог</h2>
 
 <div class="product__box">
@@ -16,8 +14,12 @@
   const buttons = document.querySelectorAll('.product__button');
   buttons.forEach(button => {
     button.addEventListener('click', event => {
-      addActionToBuyButton(button);
-    })
-  })
+      let data = {
+        productId: button.dataset.product_id,
+      }
+      addPostQueryToElement('/basketapi/add', data);
+      setTimeout(() => window.location.replace('/catalog'), 50);
+    });
+  });
 
 </script>

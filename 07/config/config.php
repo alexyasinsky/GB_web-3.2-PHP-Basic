@@ -14,6 +14,7 @@ define('DB', 'gb_php_1');
 include ROOT . '/engine/auth.php';
 include ROOT . "/engine/functions.php";
 include ROOT . "/engine/db.php";
+include ROOT . "/engine/styles.php";
 include ROOT . "/models/catalog.php";
 include ROOT . "/models/feedback.php";
 include ROOT . "/models/basket.php";

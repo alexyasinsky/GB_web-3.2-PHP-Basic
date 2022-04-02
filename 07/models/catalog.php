@@ -1,5 +1,7 @@
 <?php
 
+
+
 function getCatalogFromDB() {
     return getAssocResult('SELECT * FROM catalog ORDER BY `views` DESC');
 }

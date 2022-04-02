@@ -2,6 +2,8 @@
 
 session_start();
 
+error_reporting(E_ALL);
+
 include dirname(__DIR__) . "/config/config.php";
 include ROOT . '/engine/controller.php';
 
@@ -21,9 +23,10 @@ switch ($url_array[1]) {
 
     default:
         $page = $url_array[1];
+        $action = $url_array[2];
 }
 
-$params = prepareVariables($page);
+$params = prepareVariables($page, $action);
 
 echo render($page, $params);
 
