@@ -4,11 +4,11 @@ function doFeedbackAction($action) {
     switch ($action) {
         case 'add':
             $product_id = addFeedBack();
-            header("Location: /product?product_id=$product_id");
+            header("Location: /product/?product_id=$product_id");
             die();
         case 'delete':
             $product_id = deleteFeedback();
-            header("Location: /product?product_id=$product_id");
+            header("Location: /product/?product_id=$product_id");
             die();
         case 'edit':
             $feedback_id = editFeedback();
@@ -16,7 +16,7 @@ function doFeedbackAction($action) {
             break;
         case 'save':
             $product_id = saveFeedback();
-            header("Location: /product?product_id=$product_id");
+            header("Location: /product/?product_id=$product_id");
             die();
     }
 }

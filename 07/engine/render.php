@@ -1,8 +1,7 @@
 <?php
 
-function render($page, $params = []) {
-    return renderTemplate(LAYOUTS_DIR . 'main', [
-        'styles' => $params['styles'],
+function render($page, $params = [], $layout) {
+    return renderTemplate(LAYOUTS_DIR . $layout, [
         'title' => $params['title'],
         'menu' => renderTemplate('menu', $params),
         'content' => renderTemplate($page, $params)
@@ -11,13 +10,19 @@ function render($page, $params = []) {
 
 function renderTemplate($page, $params = []) {
 
-    /*    foreach ($params as $key => $value) {
-            $$key = $value;
-        }*/
-    extract($params);
-
     ob_start();
-    include TEMPLATES_DIR . $page . ".php";
+
+    if (!is_null($params))
+        extract($params);
+
+    $fileName = TEMPLATES_DIR . $page . ".php";
+
+    if (file_exists($fileName)) {
+        include $fileName;
+    } else {
+        Die("Страницы {$page} не существует.");
+    }
+
     return ob_get_clean();
 }
 

@@ -2,7 +2,7 @@
 
 <div class="product__card">
     <h3><?=$item['name']?></h3>
-    <img src="img/catalog/<?=$item['image']?>" alt="" width="100">
+    <img src="/img/catalog/<?=$item['image']?>" alt="" width="100">
     <p class="product__about"><?=$item['about']?></p>
     Цена: <?=$item['price']?><br>
     <button class="product__button" data-product_id="<?=$item['id']?>">Купить</button>
@@ -44,6 +44,6 @@
       productId: button.dataset.product_id,
     }
     addPostQueryToElement('/basketapi/add', data);
-    setTimeout(() => window.location.replace(`/product?product_id=${data.productId}`), 50);
+    setTimeout(() => window.location.replace(`/product/?product_id=${data.productId}`), 50);
   });
 </script>

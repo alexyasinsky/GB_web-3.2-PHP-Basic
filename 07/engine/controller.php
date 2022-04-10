@@ -8,12 +8,14 @@ function prepareVariables($page, $action) {
     $params['auth'] = isAuth();
     $params['name'] = get_user();
     $params['statusMessage'] = setStatusMessage();
-    $params['basketAmount'] = getBasketAmount();
 
     switch ($page) {
 
         case 'login':
-            loginActions();
+            $login = mysqli_real_escape_string(getDb(), strip_tags(stripslashes($_POST['login'])));
+            $password = strip_tags(stripslashes($_POST['password']));
+            $action = $_POST['action'];
+            loginActions($login, $password, $action);
             break;
 
         case 'logout':
@@ -27,13 +29,13 @@ function prepareVariables($page, $action) {
 
         case 'catalog':
             $params['title'] = 'Каталог';
-            $params['styles'] = getStyles('catalog');
+            $params['layout'] = 'catalog';
             $params['catalog'] = getCatalogFromDB();
             break;
 
         case 'product':
             $params['title'] = 'Товар';
-            $params['styles'] = getStyles('catalog');
+            $params['layout'] = 'catalog';
             $productId = (int)$_GET['product_id'];
             updateViewsOnProductInDB($productId);
             if (isset($_REQUEST['feedback'])) {
@@ -50,12 +52,14 @@ function prepareVariables($page, $action) {
 
         case 'basket':
             $params['title'] = 'Корзина';
+            $params['layout'] = 'basket';
             $params['basket'] = getBasket();
             $params['total'] = getTotalCostOfBasket($params['basket']);
             break;
 
         case 'basketapi':
             doBasketActions($action);
+            break;
 
         default:
             echo "404";

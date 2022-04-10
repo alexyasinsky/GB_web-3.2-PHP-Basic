@@ -56,10 +56,7 @@ function checkCookieHash() {
     }
 }
 
-function loginActions() {
-    $login = mysqli_real_escape_string(getDb(), strip_tags(stripslashes($_POST['login'])));
-    $password = strip_tags(stripslashes($_POST['password']));
-    $action = $_POST['action'];
+function loginActions($login, $password, $action) {
     switch ($action) {
         case 'register':
             $password_hash = password_hash($password, PASSWORD_ARGON2ID);

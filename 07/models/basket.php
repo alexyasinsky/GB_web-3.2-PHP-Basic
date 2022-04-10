@@ -1,28 +1,34 @@
 <?php
 
-function putProductIntoBasket($productId) {
-    $sessionId = $_SESSION['id'];
+function putProductIntoBasket() {
+    $data = json_decode(file_get_contents('php://input'));
+    $productId = $data->productId;
+    $userId = $_SESSION['id'];
     if (isset($_SESSION['login'])) {
-        putProductIntoBasketDB($sessionId, $productId);
+        putProductIntoBasketDB($userId, $productId);
     } else {
         putProductIntoBasketSessionStorage($productId);
     }
 }
 
-function deleteProductFromBasket($productId, $basketItemId, $amount) {
+function deleteProductFromBasket() {
+    $data = json_decode(file_get_contents('php://input'));
+    $productId = $data->productId;
+    $amount = $data->amount;
+    $basketItemId = $data->basketItemId;
     if (isset($_SESSION['login'])) {
-        deleteProductFromBasketInDB($basketItemId, $amount);
+        $userId = $_SESSION['id'];
+        deleteProductFromBasketInDB($basketItemId, $userId, $amount);
     } else {
         deleteProductFromBasketInSessionStorage($productId, $amount);
     }
 }
 
-function deleteProductFromBasketInDB($basketItemId, $amount) {
-    $sessionId = $_SESSION['id'];
+function deleteProductFromBasketInDB($basketItemId, $userId, $amount) {
     if ($amount == 1) {
-        return executeSql("DELETE FROM `basket` WHERE id={$basketItemId}");
+        return executeSql("DELETE FROM `basket` WHERE id={$basketItemId} AND user_id={$userId}");
     } else {
-        return executeSql("UPDATE `basket` SET amount = amount - 1 WHERE id={$basketItemId}");
+        return executeSql("UPDATE `basket` SET amount = amount - 1 WHERE id={$basketItemId} AND user_id={$userId}");
     }
 }
 
@@ -35,15 +41,16 @@ function deleteProductFromBasketInSessionStorage($productId, $amount) {
 }
 
 function getBasket() {
-    $sessionId = $_SESSION['id'];
+
     if (isset($_SESSION['login'])) {
-        return getBasketFromDB($sessionId);
+        $userId = $_SESSION['id'];
+        return getBasketFromDB($userId);
     } else {
         return getBasketFromSessionStorage();
     }
 }
-function getBasketFromDB($sessionId) {
-    return getAssocResult("SELECT basket.id, basket.product_id, basket.amount, catalog.name, catalog.price, catalog.image FROM `basket` JOIN `catalog` ON basket.product_id = catalog.id WHERE `session_id` = {$sessionId}");
+function getBasketFromDB($userId) {
+    return getAssocResult("SELECT basket.id, basket.product_id, basket.amount, catalog.name, catalog.price, catalog.image FROM `basket` JOIN `catalog` ON basket.product_id = catalog.id WHERE `user_id` = {$userId}");
 }
 
 function getBasketFromSessionStorage() {
@@ -67,13 +74,13 @@ function getTotalCostOfBasket($basket) {
     return $total;
 }
 
-function putProductIntoBasketDB($sessionId, $productId, $amount = 1) {
-    $row = getOneResult("SELECT * FROM basket WHERE session_id = {$sessionId} AND product_id = {$productId}");
+function putProductIntoBasketDB($userId, $productId, $amount = 1) {
+    $row = getOneResult("SELECT * FROM basket WHERE user_id = {$userId} AND product_id = {$productId}");
     if ($row) {
         $amountToDB = $row['amount'] + $amount;
-        return executeSql("UPDATE `basket` SET amount = {$amountToDB} WHERE session_id = {$sessionId} AND product_id = {$productId}");
+        return executeSql("UPDATE `basket` SET amount = {$amountToDB} WHERE user_id = {$userId} AND product_id = {$productId}");
     } else {
-        return executeSql("INSERT INTO `basket`(`session_id`, `product_id`, `amount`) VALUES ({$sessionId}, {$productId}, {$amount})");
+        return executeSql("INSERT INTO `basket`(`user_id`, `product_id`, `amount`) VALUES ({$userId}, {$productId}, {$amount})");
     }
 }
 
@@ -86,10 +93,10 @@ function putProductIntoBasketSessionStorage($productId) {
 }
 
 function putBasketFromSessionStorageToDB() {
-    $sessionId = $_SESSION['id'];
+    $userId = $_SESSION['id'];
     if (isset($_SESSION['basket'])) {
         foreach ($_SESSION['basket'] as $productId => $amount) {
-            putProductIntoBasketDB($sessionId, $productId, $amount);
+            putProductIntoBasketDB($userId, $productId, $amount);
         }
         unset($_SESSION['basket']);
     }
@@ -105,17 +112,34 @@ function getBasketAmount() {
     return $amount;
 }
 
+function sendAllBasket() {
+    $basket = getBasket();
+    header("Content-type: application/json");
+    echo json_encode($basket);
+}
+
 function doBasketActions($action) {
-    $data = json_decode(file_get_contents('php://input'));
-    $productId = $data->productId;
-    $amount = $data->amount;
-    $basketItemId = $data->basketItemId;
-    switch ($action){
+        switch ($action){
+        case 'getAll':
+            sendAllBasket();
+            die();
         case 'add':
-            putProductIntoBasket($productId);
-            break;
+            putProductIntoBasket();
+            header("Content-type: application/json");
+            $response['result'] = 1;
+            echo json_encode($response);
+            die();
         case 'delete':
-            deleteProductFromBasket($productId, $basketItemId, $amount);
-            break;
+            deleteProductFromBasket();
+            header("Content-type: application/json");
+            $response['result'] = 1;
+            echo json_encode($response);
+            die();
+        case 'getTotalAmount':
+            $totalAmount = getBasketAmount();
+            header("Content-type: application/json");
+            $response['totalAmount'] = $totalAmount;
+            echo json_encode($response);
+            die();
     }
 }

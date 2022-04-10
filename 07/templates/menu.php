@@ -10,10 +10,11 @@
         <button type="submit" name="action" value="enter">Войти</button>
     </form>
 <?php endif; ?>
-
 <hr>
-<a href="/">Главная</a>
-<a href="/catalog">Каталог</a>
-<a href="/about">О нас</a>
-<a href="/basket">Корзина <span id="basket__indicator"><?=$basketAmount ?? '(' . $basketAmount . ')'?></span> </a>
-<br>
+    <a href="/">Главная</a>
+    <a href="/catalog">Каталог</a>
+    <a href="/about">О нас</a>
+    <a href="/basket">Корзина <span id="basket__indicator"></span> </a>
+    <br>
+
+
