@@ -5,6 +5,7 @@ function prepareVariables($page, $action) {
     $params = [];
     $params['auth'] = isAuth();
     $params['name'] = get_user();
+    $params['isAdmin'] = isAdmin();
     $params['statusMessage'] = setStatusMessage();
 
     switch ($page) {
@@ -50,9 +51,6 @@ function prepareVariables($page, $action) {
 
         case 'basket':
             $params['title'] = 'Корзина';
-            $params['layout'] = 'basket';
-            $params['basket'] = getBasket();
-            $params['total'] = getTotalCostOfBasket($params['basket']);
             break;
 
         case 'basketapi':
@@ -62,6 +60,21 @@ function prepareVariables($page, $action) {
         case 'checkout':
             $params['title'] = 'Оформление заказа';
             break;
+
+        case 'orders':
+            if (!$params['isAdmin']) {
+                die();
+            }
+            $params['title'] = 'Все заказы';
+            break;
+
+        case 'oneorder':
+            $params['orderId'] = $_GET['order_id'];
+            $params['title'] = 'Заказ' . $params['orderId'];
+            $params['basket'] = getBasketByOrder($params['orderId']);
+            $params['total'] = getTotalCostOfBasket($params['basket']);
+            break;
+
 
         case 'orderapi':
             $auth = $params['auth'];

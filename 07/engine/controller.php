@@ -50,7 +50,6 @@ function prepareVariables($page, $action) {
 
         case 'basket':
             $params['title'] = 'Корзина';
-            $params['layout'] = 'basket';
             $params['basket'] = getBasket();
             $params['total'] = getTotalCostOfBasket($params['basket']);
             break;

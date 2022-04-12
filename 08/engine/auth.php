@@ -4,6 +4,14 @@ function get_user() {
     return $_SESSION['login'] ?? '';
 }
 
+function isAdmin() {
+    if (isset($_SESSION['role'])) {
+        return $_SESSION['role'] === 'admin';
+    }
+    return false;
+
+}
+
 function isAuth() {
     if (isset($_SESSION['login'])) {
         return true;
@@ -33,6 +41,7 @@ function auth($login, $password) {
             //Авторизация
             $_SESSION['login'] = $login;
             $_SESSION['id'] = $row['id'];
+            $_SESSION['role'] = $row['role'];
             $userId = $_SESSION['id'];
             postponeBasketFromSessionStorageToUnorderedDB($userId);
             return true;

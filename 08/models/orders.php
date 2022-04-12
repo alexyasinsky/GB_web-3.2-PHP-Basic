@@ -11,7 +11,27 @@ function doOrderActions($action, $auth) {
             echo json_encode($response);
             die();
 
+        case 'getAll':
+            $orders = getOrders();
+            header("Content-type: application/json");
+            echo json_encode($orders);
+            die();
+
+        case 'changeStatus':
+            $data = json_decode(file_get_contents('php://input'));
+            $orderId = $data->orderId;
+            $status = $data->status;
+            executeSql("UPDATE `orders` SET status='{$status}' WHERE id={$orderId}");
+            header("Content-type: application/json");
+            $response['result'] = 1;
+            echo json_encode($response);
+            die();
+
     }
+}
+
+function getOrders() {
+    return getAssocResult("SELECT `orders`.`id`, `orders`.`status`, `customers`.`name`, `customers`.`tel` FROM `orders` JOIN `customers` on `orders`.`customer_id` = `customers`.`id`");
 }
 
 function getCustomerId() {
@@ -50,7 +70,7 @@ function postponeBasketFromUnorderedToOrderedDB($orderId) {
     $userId = $_SESSION['id'];
     $basket = getAssocResult("SELECT `product_id`, `amount` FROM `basket_unordered` WHERE `user_id` = {$userId}");
     foreach ($basket as $item) {
-        putBasketToOrderedDB($orderId, $userId, $item['product_id'], $item['amount']);
+        putBasketToOrderedDB($orderId, $item['product_id'], $item['amount']);
     }
     deleteProductsFromBasketUnordered($userId);
 }
@@ -75,6 +95,9 @@ function deleteBasketFromSessionStorage() {
     unset($_SESSION['basket']);
 }
 
+function getBasketByOrder($orderId) {
+    return getAssocResult("SELECT basket_ordered.id as id, basket_ordered.product_id as product_id, basket_ordered.amount as amount, catalog.name as name, catalog.price as price, catalog.image as image FROM `basket_ordered` JOIN `catalog` ON basket_ordered.product_id = catalog.id WHERE `order_id` = {$orderId}");
+}
 
 
 

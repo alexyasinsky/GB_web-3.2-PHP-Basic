@@ -5,7 +5,7 @@
         <h3>Корзина пуста</h3>
     </div>
     <table v-else>
-        <tr class="basket__row">
+        <tr class="table__row">
            <th></th>
             <th>Наименование</th>
             <th>Цена</th>
@@ -13,7 +13,7 @@
             <th>Стоимость</th>
             <th></th>
         </tr>
-        <tr v-for="item in basket" class="basket__row">
+        <tr v-for="item in basket" class="table__row">
             <td>
                <a :href="'/product/?product_id=' + item.id"><img :src="'img/catalog/' + item.image" :alt="item.name" width="50px"></a>
            </td>
@@ -105,7 +105,7 @@
 
       mounted() {
         this.getData('/basketapi/getAll/').then(items => this.basket = items);
-        }
+      }
     });
 </script>
 

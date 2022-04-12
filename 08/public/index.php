@@ -15,7 +15,7 @@ include ROOT . '/engine/controller.php';
 //    $page = $_GET['page'];
 //}
 //$page = $_GET['page'] ?? 'index';
-$url = preg_replace('/\?[a-z0-9=]*/','', $_SERVER['REQUEST_URI']);
+$url = preg_replace('/\?[a-z0-9=_]*/','', $_SERVER['REQUEST_URI']);
 $url_array = explode('/', $url);
 $action = '';
 

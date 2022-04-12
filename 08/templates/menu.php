@@ -1,6 +1,6 @@
 <?=$statusMessage?>
 <?php if ($auth): ?>
-    Добро пожаловать <?= $name ?>, <a href="/logout">[Выход]</a>
+    Добро пожаловать, <?= $name ?> <a href="/logout">[Выход]</a>
 <?php else: ?>
     <form action="/login" method="post">
         <input type="text" name="login">
@@ -14,7 +14,8 @@
     <a href="/">Главная</a>
     <a href="/catalog">Каталог</a>
     <a href="/about">О нас</a>
-    <a href="/basket">Корзина <span id="basket__indicator"></span> </a>
+    <a href="/basket">Корзина</a>
+<?php if ($isAdmin): ?>
+    <a href="/orders">Все заказы</a>
+<?php endif; ?>
     <br>
-
-
