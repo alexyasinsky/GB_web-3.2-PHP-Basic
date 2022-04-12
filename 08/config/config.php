@@ -17,3 +17,4 @@ include ROOT . "/engine/db.php";
 include ROOT . "/models/catalog.php";
 include ROOT . "/models/feedback.php";
 include ROOT . "/models/basket.php";
+include ROOT . "/models/order.php";

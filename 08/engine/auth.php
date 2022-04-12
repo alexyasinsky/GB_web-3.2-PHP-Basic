@@ -33,7 +33,8 @@ function auth($login, $password) {
             //Авторизация
             $_SESSION['login'] = $login;
             $_SESSION['id'] = $row['id'];
-            putBasketFromSessionStorageToDB();
+            $userId = $_SESSION['id'];
+            postponeBasketFromSessionStorageToUnorderedDB($userId);
             return true;
         }
     }
@@ -93,6 +94,7 @@ function setStatusMessage() {
     $messages = [
         'incorrect' => 'Вы ввели неверный логин или пароль',
         'registered' => 'Регистрация успешно завершена!',
+        'entered' => '',
         'exit' => 'Вы вышли из системы',
         'exist' => 'Такой пользователь уже существует',
         'empty' => ''

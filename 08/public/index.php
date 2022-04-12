@@ -15,8 +15,8 @@ include ROOT . '/engine/controller.php';
 //    $page = $_GET['page'];
 //}
 //$page = $_GET['page'] ?? 'index';
-
-$url_array = explode('/', $_SERVER['REQUEST_URI']);
+$url = preg_replace('/\?[a-z0-9=]*/','', $_SERVER['REQUEST_URI']);
+$url_array = explode('/', $url);
 $action = '';
 
 switch ($url_array[1]) {
@@ -26,7 +26,7 @@ switch ($url_array[1]) {
 
     default:
         $page = $url_array[1];
-        if (isset($url_array[2]) && !preg_match('/\?/',$url_array[2])) {
+        if (isset($url_array[2])) {
             $action = $url_array[2];
         }
 }

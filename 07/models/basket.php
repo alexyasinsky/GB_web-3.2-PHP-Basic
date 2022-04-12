@@ -92,7 +92,7 @@ function putProductIntoBasketSessionStorage($productId) {
     }
 }
 
-function putBasketFromSessionStorageToDB() {
+function postponeBasketFromSessionStorageToUnorderedDB() {
     $userId = $_SESSION['id'];
     if (isset($_SESSION['basket'])) {
         foreach ($_SESSION['basket'] as $productId => $amount) {

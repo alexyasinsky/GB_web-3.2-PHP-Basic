@@ -59,6 +59,15 @@ function prepareVariables($page, $action) {
             doBasketActions($action);
             break;
 
+        case 'checkout':
+            $params['title'] = 'Оформление заказа';
+            break;
+
+        case 'orderapi':
+            $auth = $params['auth'];
+            doOrderActions($action, $auth);
+            break;
+
         default:
             echo "404";
             die();

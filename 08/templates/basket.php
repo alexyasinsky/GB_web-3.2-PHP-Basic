@@ -39,9 +39,11 @@
             </td>
         </tr>
     </table>
-    <h3>ИТОГО: {{ totalBasketCost }} ₽</h3>
+    <div v-show="totalBasketCost > 0">
+        <h3>ИТОГО: {{ totalBasketCost }} ₽</h3>
+        <a href="/checkout">Оформить покупку</a>
+    </div>
 
-    <a href="/checkout">Оформить покупку</a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>

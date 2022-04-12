@@ -33,7 +33,8 @@ function auth($login, $password) {
             //Авторизация
             $_SESSION['login'] = $login;
             $_SESSION['id'] = $row['id'];
-            putBasketFromSessionStorageToDB();
+            $userId = $_SESSION['id'];
+            postponeBasketFromSessionStorageToUnorderedDB($userId);
             return true;
         }
     }
